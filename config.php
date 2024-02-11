@@ -20,12 +20,27 @@ $sql = 'USE whatarecord';
 if (!$mysqli->query($sql)) {die($mysqli->connect_error);};
 
 //creo la tabella
+
+
+$sql= 'CREATE TABLE IF NOT EXISTS artists (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    country VARCHAR(255),
+    albumN INT UNSIGNED ,
+    genre VARCHAR(255) ,
+    cover VARCHAR(255)
+    )';
+if (!$mysqli->query($sql)) {die($mysqli->connect_error);};
+
 $sql= 'CREATE TABLE IF NOT EXISTS albums (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
     artist VARCHAR(255) NOT NULL,
     year INT UNSIGNED NOT NULL,
     genre VARCHAR(255) NOT NULL,
-    cover VARCHAR(255)
+    cover VARCHAR(255),
+    art_id INT NOT NULL,
+    FOREIGN KEY (art_id) REFERENCES artists (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (artist) REFERENCES artists (name) ON DELETE CASCADE ON UPDATE CASCADE
     )';
 if (!$mysqli->query($sql)) {die($mysqli->connect_error);};
